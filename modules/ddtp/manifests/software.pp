@@ -1,4 +1,11 @@
 class ddtp::software {
+	include ddtp::software::setup
+	include ddtp::software::config
+
+	Class[ddtp::software::setup] -> Class[ddtp::software::config]
+}
+
+class ddtp::software::setup {
 	# Create the ddtp user and directory
 	file { '/srv':
 		ensure => directory,
@@ -26,5 +33,11 @@ class ddtp::software {
 		cwd => "/srv/$server_name",
 		require => File["/srv/$server_name"],
 	}
+}
 
+class ddtp::software::config {
+
+	file { '/var/www/ddtp/ddt.cgi':
+		ensure => "/srv/$server_name/ddt.cgi",
+	}
 }
