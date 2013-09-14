@@ -6,3 +6,5 @@ $server_name = 'ddtp.debian.net'
 $server_admin = 'debian-l10n-devel@lists.alioth.debian.org'
 
 include ddtp::webserver
+include ddtp::database::server
+include ddtp::database
