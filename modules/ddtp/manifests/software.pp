@@ -36,6 +36,11 @@ class ddtp::software::setup {
 }
 
 class ddtp::software::config {
+	# pg_service file so everyone can login to database
+	file { "/srv/$server_name/.pg_service.conf":
+		content => template('ddtp/pg_service.conf'),
+		owner => ddtp,
+	}
 
 	file { '/var/www/ddtp/ddt.cgi':
 		ensure => "/srv/$server_name/ddt.cgi",

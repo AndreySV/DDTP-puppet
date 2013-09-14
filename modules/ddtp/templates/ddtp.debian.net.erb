@@ -29,6 +29,7 @@
 	<Directory /var/www/ddtp/>
 		AllowOverride AuthConfig
 		Options Indexes Includes FollowSymLinks ExecCGI
+		SetEnv PGSERVICEFILE /srv/<%= server_name %>/.pg_service.conf
 		AddHandler cgi-script .cgi .sh .pl
 	</Directory>
 
@@ -64,6 +65,7 @@
 	<Directory /var/www/ddtp/>
 		AllowOverride AuthConfig
 		Options Indexes Includes FollowSymLinks ExecCGI
+		SetEnv PGSERVICEFILE /srv/<%= server_name %>/.pg_service.conf
 		AddHandler cgi-script .cgi .sh .pl
 	</Directory>
 
