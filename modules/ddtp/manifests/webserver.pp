@@ -1,6 +1,8 @@
 # This is a puppet manifest for the webserver config of the DDTP
 
 class ddtp::webserver {
+	include ddtp::webserver::ssl
+
 	package { 'apache2': }
 
 	# Remove default site
@@ -63,5 +65,27 @@ class ddtp::webserver {
 		enable => true,
 		ensure => running,
 		require => [Package['apache2']],
+	}
+}
+
+# Handle the SSL certificates, creates one if it doesn't exist.
+class ddtp::webserver::ssl {
+	package { 'ssl-cert': }
+
+	file { '/srv/admin':
+		ensure => directory
+	}
+	file { '/srv/admin/ssl':
+		ensure => directory
+	}
+
+	file { "/srv/admin/ssl/$server_name.cnf":
+		content => template('ddtp/ddtp.ssl.cnf'),
+	}
+
+	exec { 'make-default-ssl':
+		command => "/usr/sbin/make-ssl-cert /srv/admin/ssl/$server_name.cnf /srv/admin/ssl/$server_name.pem",
+		creates => "/srv/admin/ssl/$server_name.pem",
+		require => File["/srv/admin/ssl/$server_name.cnf"],
 	}
 }
