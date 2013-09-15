@@ -14,6 +14,10 @@ class ddtp::software::setup {
 		mode => 755,
 	}
 
+	file { '/org':
+		ensure => '/srv'
+	}
+
 	file { "/srv/$server_name":
 		ensure => directory,
 		owner => ddtp,
@@ -26,6 +30,8 @@ class ddtp::software::setup {
 	}
 
 	package { ['libdbd-pg-perl', 'libtext-diff-perl', 'libwww-perl', 'libmime-tools-perl']: }
+	package { 'bzip2': }
+	package { 'gnuplot-nox': }
 
 	exec { "/usr/bin/git clone git://git.debian.org/git/debian-l10n/ddtp.git /srv/$server_name":
 		user => ddtp,
@@ -42,7 +48,25 @@ class ddtp::software::config {
 		owner => ddtp,
 	}
 
+	# Create needed directories
+	file { ["/srv/$server_name/log", "/srv/$server_name/gnuplot"]:
+		ensure => directory,
+		owner => ddtp,
+		mode => 644,
+	}
+
+	# DDTP CGI script
 	file { '/var/www/ddtp/ddt.cgi':
 		ensure => "/srv/$server_name/ddt.cgi",
+	}
+
+	# DDTSS CGI script
+	file { '/var/www/ddtp/ddtss':
+		ensure => directory,
+		owner => ddtp,
+	}
+
+	file { '/var/www/ddtp/ddtss/index.cgi':
+		ensure => "/srv/$server_name/ddtss/ddtss-cgi",
 	}
 }
