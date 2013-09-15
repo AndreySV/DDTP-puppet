@@ -1,6 +1,7 @@
 class ddtp::software {
 	include ddtp::software::setup
 	include ddtp::software::config
+	include ddtp::software::ddtp-dinstall
 
 	Class[ddtp::software::setup] -> Class[ddtp::software::config]
 }
@@ -68,5 +69,46 @@ class ddtp::software::config {
 
 	file { '/var/www/ddtp/ddtss/index.cgi':
 		ensure => "/srv/$server_name/ddtss/ddtss-cgi",
+	}
+}
+
+class ddtp::software::ddtp-dinstall {
+	file { '/srv/ddtp-dinstall':
+		ensure => directory,
+		owner => ddtp,
+	}
+
+	# Link must exist, though doesn't need to point anywhere
+	file { '/srv/ddtp-dinstall/to-dak':
+		ensure => link,
+		target => 'x',
+		replace => false,
+	}
+
+	# Special user for dak to login
+	user { 'ddtp-dak':
+		home => "/home/ddtp-dak",
+		password => "*",
+	}
+
+	file { "/home/ddtp-dak":
+		ensure => directory,
+		owner => "ddtp-dak",
+		mode => 755,
+	}
+
+	# This is the directory where the authorized_keys file must go to allow dak to login
+	file { "/home/ddtp-dak/.ssh":
+		ensure => directory,
+		owner => "ddtp-dak",
+		mode => 700,
+	}
+
+	# Sample file for the correct options...
+	file { "/home/ddtp-dak/.ssh/authorized_keys":
+		owner => "ddtp-dak",
+		mode => 600,
+		replace => false,
+		content => 'command="/usr/bin/rsync --server --sender -logDtpr . /srv/ddtp-dinstall/to-dak/.",from="ries.debian.org,128.148.34.103,franck.debian.org,128.148.34.3",no-agent-forwarding,no-port-forwarding,no-pty,no-X11-forwarding ssh-rsa AAA...',
 	}
 }
