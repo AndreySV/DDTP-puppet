@@ -12,4 +12,4 @@ include ddtp::software
 include ddtp::database::server
 include ddtp::database
 include ddtp::mail::server
-
+include ddtp::software::mail

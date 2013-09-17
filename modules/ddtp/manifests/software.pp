@@ -112,3 +112,21 @@ class ddtp::software::ddtp-dinstall {
 		content => 'command="/usr/bin/rsync --server --sender -logDtpr . /srv/ddtp-dinstall/to-dak/.",from="ries.debian.org,128.148.34.103,franck.debian.org,128.148.34.3",no-agent-forwarding,no-port-forwarding,no-pty,no-X11-forwarding ssh-rsa AAA...',
 	}
 }
+
+class ddtp::software::mail {
+	file { "/srv/$server_name/.forward":
+		owner => ddtp,
+		mode => 600,
+		content => template('ddtp/forward'),
+	}
+
+	file { "/srv/$server_name/ddts/log":
+		ensure => directory,
+		mode => 755,
+	}
+
+	file { "/srv/$server_name/ddts/mail":
+		ensure => directory,
+		mode => 755,
+	}
+}
