@@ -43,15 +43,6 @@ class ddtp::webserver {
 		before => Service['apache2'],
 	}
 
-	# Create web directory
-	file { '/var/www/ddtp':
-		ensure => directory,
-		owner => ddtp,
-		mode => 644,
-		require => Package['apache2'],
-		before => Service['apache2'],
-	}
-
 	# Create log directory
 	file { "/var/log/apache2/$server_name":
 		ensure => directory,

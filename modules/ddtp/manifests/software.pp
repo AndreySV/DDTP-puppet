@@ -50,25 +50,41 @@ class ddtp::software::config {
 	}
 
 	# Create needed directories
-	file { ["/srv/$server_name/log", "/srv/$server_name/gnuplot"]:
+	file { ["/srv/$server_name/log", "/srv/$server_name/gnuplot", "/srv/$server_name/pg_dump", "/srv/$server_name/www"]:
 		ensure => directory,
 		owner => ddtp,
 		mode => 644,
 	}
 
+	file { ["/srv/$server_name/www/stats", "/srv/$server_name/www/source"]:
+		ensure => directory,
+		owner => ddtp,
+		mode => 644,
+	}
+
+	# Link to web directory
+	file { "/var/www/ddtp":
+		ensure => link,
+		target => "/srv/$server_name/www",
+	}
+
 	# DDTP CGI script
-	file { '/var/www/ddtp/ddt.cgi':
+	file { "/srv/$server_name/www/ddt.cgi":
 		ensure => "/srv/$server_name/ddt.cgi",
 	}
 
 	# DDTSS CGI script
-	file { '/var/www/ddtp/ddtss':
+	file { "/srv/$server_name/www/ddtss":
 		ensure => directory,
 		owner => ddtp,
 	}
 
-	file { '/var/www/ddtp/ddtss/index.cgi':
+	file { "/srv/$server_name/www/ddtss/index.cgi":
 		ensure => "/srv/$server_name/ddtss/ddtss-cgi",
+	}
+
+	file { "/srv/$server_name/www/ddtss/ddtss.css":
+		ensure => "/srv/$server_name/ddtss/ddtss.css",
 	}
 }
 
