@@ -1,14 +1,31 @@
 # This is a puppet manifest for the webserver config of the DDTP
 
-class ddtp::webserver {
+class ddtp::webserver::server {
 	include ddtp::webserver::ssl
 
 	package { 'apache2': }
 
+	# Run webserver
+	service { 'apache2':
+		enable => true,
+		ensure => running,
+		require => [Package['apache2']],
+	}
+}
+
+class ddtp::webserver {
 	# Remove default site
 	file { '/etc/apache2/sites-enabled/000-default':
 		ensure => absent,
 		require => Package['apache2'],
+	}
+
+	# Create log directory
+	file { "/var/log/apache2/$server_name":
+		ensure => directory,
+		owner => root,
+		group => adm,
+		before => Service['apache2'],
 	}
 
 	# Add DDTP site config
@@ -41,21 +58,6 @@ class ddtp::webserver {
 	file { '/etc/apache2/mods-enabled/ssl.conf':
 		ensure => '../mods-available/ssl.conf',
 		before => Service['apache2'],
-	}
-
-	# Create log directory
-	file { "/var/log/apache2/$server_name":
-		ensure => directory,
-		owner => root,
-		group => adm,
-		before => Service['apache2'],
-	}
-
-	# Run webserver
-	service { 'apache2':
-		enable => true,
-		ensure => running,
-		require => [Package['apache2']],
 	}
 }
 
