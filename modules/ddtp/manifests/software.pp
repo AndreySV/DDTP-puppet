@@ -136,13 +136,9 @@ class ddtp::software::mail {
 		content => template('ddtp/forward'),
 	}
 
-	file { "/srv/$server_name/ddts/log":
+	file { ["/srv/$server_name/ddts/log", "/srv/$server_name/ddts/mail", "/srv/$server_name/ddts/tmp"]:
 		ensure => directory,
-		mode => 755,
-	}
-
-	file { "/srv/$server_name/ddts/mail":
-		ensure => directory,
+		owner => ddtp,
 		mode => 755,
 	}
 }
