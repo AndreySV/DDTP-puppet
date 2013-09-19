@@ -1,0 +1,93 @@
+This is a puppet manifest to install (and maintain) a DDTP server.
+
+The DDTP is the Debian Description Translation Project, see
+http://www.debian.org/international/l10n/ddtp .
+
+Installation Procedure
+======================
+
+NOTE: This is a puppet manifest and applying it *will* reconfigure the
+machine you run it on, up to and including installing a database server,
+webserver and mail server.
+
+Using it is very simple. Once you have checked it out, do:
+
+   $ cd DDTP-puppet
+   $ sudo puppet apply --modulepath modules/ init.pp
+
+This will apply the whole configuration. There are not a lot of options,
+those that exist are in the init.pp file, though you probably won't need to
+change any.
+
+If you get any errors please let me know (cut and paste output). But usually
+you can fix them by simply rerunning the above command. Puppet is
+idempotent, so you can't break anything by running it multiple times.
+
+After this you have a skeleton server, with no data. To remedy this you need
+to download the database from the original DDTP server (300MB at this
+writing). First you need to switch to the newly created ddtp user.
+
+   $ sudo -u ddtp bash
+   $ wget http://ddtp.debian.net/source/pg_ddts_current.dump.gz
+   $ zcat pg_ddts_current.dump.gz | psql ddtp -q
+
+This should be enough to get you going. There are a few loose ends for a
+complete replacement.
+
+ddtp-dinstall
+-------------
+
+The manifest includes all the necessary parts to have dak download the
+updated Translation files. However, dak uses rsync-over-ssh and so you need
+to add the public key to the authorized_keys file:
+
+   /home/ddtp-dak/.ssh/authorized_keys
+
+Email
+-----
+
+While the manifest does install a mail server (exim4) it doesn't configure
+it.  Email is mostly used to send confirmation emails from the DDTSS, though
+there is a mail interface to the DDTP.
+
+   $ sudo dpkg-reconfigure exim4-config
+
+A functional mail server also requires reverse DNS entries, MX records and
+other stuff so incoming/outgoing email actually works.
+
+Note the DDTP mail processor is not designed to handle spam, so installing
+greylisting and/or spam-filtering is highly recommended.
+
+Webserver
+---------
+
+The webserver install is Apache2 and it drops a config in the
+/etc/apache2/sites-available directory. You can choose to enable SSL support
+(which is on by default) and in that case a default snakeoil certificate
+will be generated.  For normal use however a real certificate should be
+generated. The certificate is stored in:
+
+   /srv/admin/ssl/<server_name>.pem
+
+Database
+--------
+
+The database server is PostgreSQL. It is installed without any configuration
+or tuning. A 'ddtp' user and database is created but that's it. This is
+performancewise possibly not optimal, but tuning is machine specific.
+
+Stats
+-----
+
+The statistics for the last few years is not included and its useful to have
+them for the graphs on the front page.
+
+   $ sudo -u ddtp bash
+   $ wget http://ddtp.debian.net/source/stats.tar.gz
+   $ cd ~ddtp/log
+   $ tar xzf $OLDPWD/stats.tar.gz
+
+Credits
+=======
+
+This manifest was written by Martijn van Oosterhout <kleptog@gmail.com>.
