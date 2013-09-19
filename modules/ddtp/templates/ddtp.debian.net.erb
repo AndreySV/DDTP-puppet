@@ -35,7 +35,7 @@
 
         ErrorDocument 500 /know-error.html
 </VirtualHost>
-<% if enable_ssl %>
+<% if @enable_ssl %>
 <VirtualHost *:443>
 	ServerAdmin <%= server_admin %>
 	ServerName <%= server_name %>

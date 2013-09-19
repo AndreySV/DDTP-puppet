@@ -1,7 +1,9 @@
 # This is a puppet manifest for the webserver config of the DDTP
 
 class ddtp::webserver::server {
-	include ddtp::webserver::ssl
+	if $enable_ssl {
+		include ddtp::webserver::ssl
+	}
 
 	package { 'apache2': }
 
