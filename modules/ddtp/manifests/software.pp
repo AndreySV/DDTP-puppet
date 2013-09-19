@@ -68,6 +68,14 @@ class ddtp::software::config {
 		target => "/srv/$server_name/www",
 	}
 
+	# Robots.txt file
+	file { "/srv/$server_name/www/robots.txt":
+		content => template('ddtp/robots.txt'),
+		owner => ddtp,
+		group => ddtp,
+		mode => 644,
+	}
+
 	# DDTP CGI script
 	file { "/srv/$server_name/www/ddt.cgi":
 		ensure => "/srv/$server_name/ddt.cgi",
