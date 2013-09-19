@@ -4,9 +4,6 @@
 
 	DocumentRoot /var/www/ddtp/
 
-# Used by original site, but not safe by Debian standards.
-#	SuexecUserGroup ddtp debian-i18n-users
-
 	RewriteEngine on
 
 	RewriteRule ^/ddtss/index.cgi/login https://<%= server_name %>/ddtss/index.cgi/login [R]
@@ -40,9 +37,6 @@
 	ServerAdmin <%= server_admin %>
 	ServerName <%= server_name %>
 	DocumentRoot /var/www/ddtp/
-
-# Used by original site, but not safe by Debian standards.
-#	SuexecUserGroup ddtp debian-i18n-users
 
 	SSLEngine on
 	SSLProtocol all
