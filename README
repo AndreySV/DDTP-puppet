@@ -10,8 +10,13 @@ NOTE: This is a puppet manifest and applying it *will* reconfigure the
 machine you run it on, up to and including installing a database server,
 webserver and mail server.
 
-Using it is very simple. Once you have checked it out, do:
+Using it is very simple. First you will need puppet:
 
+   $ apt-get install puppet
+
+Then, after you have checked out the repo, do:
+
+   $ git clone https://github.com/kleptog/DDTP-puppet.git
    $ cd DDTP-puppet
    $ sudo puppet apply --modulepath modules/ init.pp
 
