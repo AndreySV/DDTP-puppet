@@ -16,8 +16,8 @@ Using it is very simple. First you will need puppet:
 
 Then, after you have checked out the repo, do:
 
-   $ git clone https://github.com/kleptog/DDTP-puppet.git
-   $ cd DDTP-puppet
+   $ git clone http://anonscm.debian.org/git/debian-l10n/ddtp-puppet.git
+   $ cd ddtp-puppet
    $ sudo puppet apply --modulepath modules/ init.pp
 
 This will apply the whole configuration. There are not a lot of options,
