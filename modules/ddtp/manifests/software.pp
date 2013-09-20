@@ -4,6 +4,15 @@ class ddtp::software {
 	include ddtp::software::ddtp-dinstall
 
 	Class[ddtp::software::setup] -> Class[ddtp::software::config]
+
+	# And the final step after everything else, the cronjob
+	cron { 'ddtp daily update':
+		user => ddtp,
+		minute => 6,
+		hour => 1,
+		command => "/usr/bin/nice /srv/$server_name/update.sh",
+		require => Class[ddtp::software::config],
+	}
 }
 
 class ddtp::software::setup {
