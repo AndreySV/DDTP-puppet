@@ -43,7 +43,7 @@ class ddtp::software::setup {
 	package { 'bzip2': }
 	package { 'gnuplot-nox': }
 
-	exec { "/usr/bin/git clone git://git.debian.org/git/debian-l10n/ddtp.git /srv/$server_name":
+	exec { "/usr/bin/git clone git://anonscm.debian.org/debian-l10n/ddtp.git /srv/$server_name":
 		user => ddtp,
 		creates => "/srv/$server_name/.git",
 		cwd => "/srv/$server_name",
