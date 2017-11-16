@@ -8,7 +8,7 @@ class ddtp::monitoring::nagios {
     }
 
     # Override config file primarily to remove access restrictions
-    file { '/etc/apache2/conf.d/nagios3.conf':
+    file { '/etc/apache2/conf-available/nagios3.conf':
         content => template("ddtp/apache2-nagios3.conf"),
         require => Package['nagios3','apache2'],
         notify => Service['apache2'],
@@ -24,7 +24,7 @@ class ddtp::monitoring::munin {
     package { 'munin': ensure => installed }
 
     # Override config file primarily to remove access restrictions
-    file { '/etc/apache2/conf.d/munin':
+    file { '/etc/apache2/conf-available/munin':
         content => template("ddtp/apache2-munin.conf"),
         require => Package['munin','apache2'],
         notify => Service['apache2'],
