@@ -21,7 +21,7 @@ class ddtp::software::setup {
 		ensure => directory,
 		owner => root,
 		group => root,
-		mode => 755,
+		mode => 'u=rwx,go=rx',
 	}
 
 	file { '/org':
@@ -31,7 +31,7 @@ class ddtp::software::setup {
 	file { "/srv/$server_name":
 		ensure => directory,
 		owner => ddtp,
-		mode => 755,
+		mode => 'u=rwx,go=rx',
 	}
 
 	user { 'ddtp':
@@ -62,13 +62,13 @@ class ddtp::software::config {
 	file { ["/srv/$server_name/log", "/srv/$server_name/gnuplot", "/srv/$server_name/pg_dump", "/srv/$server_name/www"]:
 		ensure => directory,
 		owner => ddtp,
-		mode => 644,
+		mode => 'u=rw,go=r',
 	}
 
 	file { ["/srv/$server_name/www/stats", "/srv/$server_name/www/source"]:
 		ensure => directory,
 		owner => ddtp,
-		mode => 644,
+		mode => 'u=rw,go=r',
 	}
 
 	# Link to web directory
@@ -82,7 +82,7 @@ class ddtp::software::config {
 		content => template('ddtp/robots.txt'),
 		owner => ddtp,
 		group => ddtp,
-		mode => 644,
+		mode => 'u=rw,go=r',
 	}
 
 	# DDTP CGI script
@@ -127,20 +127,20 @@ class ddtp::software::ddtp_dinstall {
 	file { "/home/ddtp-dak":
 		ensure => directory,
 		owner => "ddtp-dak",
-		mode => 755,
+		mode => 'u=rwx,go=rx',
 	}
 
 	# This is the directory where the authorized_keys file must go to allow dak to login
 	file { "/home/ddtp-dak/.ssh":
 		ensure => directory,
 		owner => "ddtp-dak",
-		mode => 700,
+		mode => 'u=rwx',
 	}
 
 	# Sample file for the correct options...
 	file { "/home/ddtp-dak/.ssh/authorized_keys":
 		owner => "ddtp-dak",
-		mode => 600,
+		mode => 'u=rw',
 		replace => false,
 		content => 'command="/usr/bin/rsync --server --sender -logDtpr . /srv/ddtp-dinstall/to-dak/.",from="ries.debian.org,128.148.34.103,franck.debian.org,128.148.34.3",no-agent-forwarding,no-port-forwarding,no-pty,no-X11-forwarding ssh-rsa AAA...',
 	}
@@ -149,13 +149,13 @@ class ddtp::software::ddtp_dinstall {
 class ddtp::software::mail {
 	file { "/srv/$server_name/.forward":
 		owner => ddtp,
-		mode => 600,
+		mode => 'u=rw',
 		content => template('ddtp/forward'),
 	}
 
 	file { ["/srv/$server_name/ddts/log", "/srv/$server_name/ddts/mail", "/srv/$server_name/ddts/tmp"]:
 		ensure => directory,
 		owner => ddtp,
-		mode => 755,
+		mode => 'u=rwx,go=rx',
 	}
 }

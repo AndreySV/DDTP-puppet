@@ -35,7 +35,7 @@ class ddtp::webserver {
 		ensure => present,
 		require => Package['apache2'],
 		content => template('ddtp/ddtp.debian.net.erb'),
-		mode => 644,
+		mode => 'u=rw,og=r',
 		owner => root,
 		group => root,
 		notify => Service['apache2'],
