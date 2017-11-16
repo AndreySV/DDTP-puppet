@@ -1,7 +1,7 @@
 class ddtp::software {
 	include ddtp::software::setup
 	include ddtp::software::config
-	include ddtp::software::ddtp-dinstall
+	include ddtp::software::ddtp_dinstall
 
 	Class[ddtp::software::setup] -> Class[ddtp::software::config]
 
@@ -105,7 +105,7 @@ class ddtp::software::config {
 	}
 }
 
-class ddtp::software::ddtp-dinstall {
+class ddtp::software::ddtp_dinstall {
 	file { '/srv/ddtp-dinstall':
 		ensure => directory,
 		owner => ddtp,

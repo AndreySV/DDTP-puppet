@@ -39,7 +39,7 @@ writing). First you need to switch to the newly created ddtp user.
 This should be enough to get you going. There are a few loose ends for a
 complete replacement.
 
-ddtp-dinstall
+ddtp_dinstall
 -------------
 
 The manifest includes all the necessary parts to have dak download the
