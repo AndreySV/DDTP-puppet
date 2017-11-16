@@ -1,32 +1,32 @@
 <VirtualHost *:80>
-	ServerAdmin <%= server_admin %>
-	ServerName <%= server_name %>
+	ServerAdmin <%= @server_admin %>
+	ServerName <%= @server_name %>
 
 	DocumentRoot /var/www/ddtp/
 
 	RewriteEngine on
 
-	RewriteRule ^/ddtss/index.cgi/login https://<%= server_name %>/ddtss/index.cgi/login [R]
-	RewriteRule ^/ddtss/index.cgi/createlogin https://<%= server_name %>/ddtss/index.cgi/createlogin [R]
+	RewriteRule ^/ddtss/index.cgi/login https://<%= @server_name %>/ddtss/index.cgi/login [R]
+	RewriteRule ^/ddtss/index.cgi/createlogin https://<%= @server_name %>/ddtss/index.cgi/createlogin [R]
 	
 	<Directory />
 		Options FollowSymLinks
 		AllowOverride None
 	</Directory>
 
-	ErrorLog /var/log/apache2/<%= server_name %>/error.log
+	ErrorLog /var/log/apache2/<%= @server_name %>/error.log
 
 	# Possible values include: debug, info, notice, warn, error, crit,
 	# alert, emerg.
 	LogLevel warn
 
-	CustomLog /var/log/apache2/<%= server_name %>/access.log combined
+	CustomLog /var/log/apache2/<%= @server_name %>/access.log combined
 	ServerSignature On
 
 	<Directory /var/www/ddtp/>
 		AllowOverride AuthConfig
 		Options Indexes Includes FollowSymLinks ExecCGI
-		SetEnv PGSERVICEFILE /srv/<%= server_name %>/.pg_service.conf
+		SetEnv PGSERVICEFILE /srv/<%= @server_name %>/.pg_service.conf
 		AddHandler cgi-script .cgi .sh .pl
 	</Directory>
 
@@ -34,32 +34,32 @@
 </VirtualHost>
 <% if @enable_ssl %>
 <VirtualHost *:443>
-	ServerAdmin <%= server_admin %>
-	ServerName <%= server_name %>
+	ServerAdmin <%= @server_admin %>
+	ServerName <%= @server_name %>
 	DocumentRoot /var/www/ddtp/
 
 	SSLEngine on
 	SSLProtocol all
-	SSLCertificateFile /srv/admin/ssl/<%= server_name %>.pem
+	SSLCertificateFile /srv/admin/ssl/<%= @server_name %>.pem
 
 	<Directory />
 		Options FollowSymLinks
 		AllowOverride None
 	</Directory>
 
-	ErrorLog /var/log/apache2/<%= server_name %>/error.log
+	ErrorLog /var/log/apache2/<%= @server_name %>/error.log
 
 	# Possible values include: debug, info, notice, warn, error, crit,
 	# alert, emerg.
 	LogLevel warn
 
-	CustomLog /var/log/apache2/<%= server_name %>/access.log combined
+	CustomLog /var/log/apache2/<%= @server_name %>/access.log combined
 	ServerSignature On
 
 	<Directory /var/www/ddtp/>
 		AllowOverride AuthConfig
 		Options Indexes Includes FollowSymLinks ExecCGI
-		SetEnv PGSERVICEFILE /srv/<%= server_name %>/.pg_service.conf
+		SetEnv PGSERVICEFILE /srv/<%= @server_name %>/.pg_service.conf
 		AddHandler cgi-script .cgi .sh .pl
 	</Directory>
 
