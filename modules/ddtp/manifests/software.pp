@@ -62,13 +62,13 @@ class ddtp::software::config {
 	file { ["/srv/$server_name/log", "/srv/$server_name/gnuplot", "/srv/$server_name/pg_dump", "/srv/$server_name/www"]:
 		ensure => directory,
 		owner => ddtp,
-		mode => 'u=rw,go=r',
+		mode => 'u=rwx,go=rx',
 	}
 
 	file { ["/srv/$server_name/www/stats", "/srv/$server_name/www/source"]:
 		ensure => directory,
 		owner => ddtp,
-		mode => 'u=rw,go=r',
+		mode => 'u=rwx,go=rx',
 	}
 
 	# Link to web directory
