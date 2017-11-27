@@ -17,7 +17,7 @@ class ddtp::webserver::server {
 
 class ddtp::webserver {
 	# Remove default site
-	file { '/etc/apache2/sites-enabled/000-default':
+	file { '/etc/apache2/sites-enabled/000-default.conf':
 		ensure => absent,
 		require => Package['apache2'],
 	}
@@ -31,7 +31,7 @@ class ddtp::webserver {
 	}
 
 	# Add DDTP site config
-	file { '/etc/apache2/sites-available/ddtp.debian.net':
+	file { '/etc/apache2/sites-available/ddtp.debian.net.conf':
 		ensure => present,
 		require => Package['apache2'],
 		content => template('ddtp/ddtp.debian.net.erb'),
@@ -41,8 +41,8 @@ class ddtp::webserver {
 		notify => Service['apache2'],
 	}
 
-	file { '/etc/apache2/sites-enabled/ddtp.debian.net':
-		ensure => '/etc/apache2/sites-available/ddtp.debian.net',
+	file { '/etc/apache2/sites-enabled/ddtp.debian.net.conf':
+		ensure => '../sites-available/ddtp.debian.net.conf',
 		before => Service['apache2'],
 	}
 
