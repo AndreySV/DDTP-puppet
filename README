@@ -91,6 +91,16 @@ them for the graphs on the front page.
    $ wget http://ddtp.debian.net/source/stats.tar.gz
    $ cd ~ddtp/log
    $ tar xzf $OLDPWD/stats.tar.gz
+   $ cd ~ddtp
+   $ ./db2web.sh
+
+Daily description translation stats will be created by cron job running at night.
+You can trigger it manually, but be aware that this will take some time.
+
+   $ sudo -u ddtp bash
+   $ cd ~ddtp
+   $ ./update.sh
+
 
 Credits
 =======
