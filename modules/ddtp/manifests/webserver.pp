@@ -52,6 +52,11 @@ class ddtp::webserver {
 		before => Service['apache2'],
 	}
 
+	file { '/etc/apache2/mods-enabled/cgi.load':
+		ensure => '../mods-available/cgi.load',
+		before => Service['apache2'],
+	}
+
 	file { '/etc/apache2/mods-enabled/socache_shmcb.load':
 		ensure => '../mods-available/socache_shmcb.load',
 		before => Service['apache2'],
