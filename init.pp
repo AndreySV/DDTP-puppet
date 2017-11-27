@@ -18,8 +18,8 @@ include ddtp::mail::server
 # itself.  These indirectly depend on the above packages so might need
 # slight adjustment if you modify them.  These are the guts of the
 # configuration.
-include ddtp::webserver
 include ddtp::software
+include ddtp::webserver
 include ddtp::database
 include ddtp::software::mail
 
