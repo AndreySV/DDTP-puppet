@@ -40,7 +40,7 @@ class ddtp::software::setup {
 	}
 
 	package { ['libdbd-pg-perl', 'libtext-diff-perl', 'libwww-perl', 'libmime-tools-perl']: }
-	package { 'bzip2': }
+	package { ['bzip2', 'git']: }
 	package { 'gnuplot-nox': }
 
 	exec { "/usr/bin/git clone git://anonscm.debian.org/debian-l10n/ddtp.git /srv/$server_name":
