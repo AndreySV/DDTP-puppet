@@ -24,5 +24,4 @@ include ddtp::database
 include ddtp::software::mail
 
 # This class are for monitoring for problems
-# include ddtp::monitoring::nagios
 include ddtp::monitoring::munin
