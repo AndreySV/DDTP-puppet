@@ -36,8 +36,9 @@ writing). First you need to switch to the newly created ddtp user.
    $ wget http://ddtp.debian.net/source/pg_ddts_current.dump.gz
    $ zcat pg_ddts_current.dump.gz | psql ddtp -q
 
-This should be enough to get you going. There are a few loose ends for a
-complete replacement.
+You can use setup.sh script to avoid retyping all these commands (and commands
+from Stats section). This should be enough to get you going. There are a few
+loose ends for a complete replacement.
 
 ddtp_dinstall
 -------------
