@@ -2,7 +2,7 @@
 
 # Webserver configuration
 $enable_ssl = true
-$server_name = 'ddtp.debian.net'
+$server_name = 'ddtp.debian.org'
 $server_admin = 'debian-l10n-devel@lists.alioth.debian.org'
 
 $postgres_password = md5($macaddress)
